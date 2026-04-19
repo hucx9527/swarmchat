@@ -207,6 +207,7 @@ pub fn generate_did_from_identity(identity: &Identity, key_type: &str) -> Result
 #[cfg(test)]
 mod tests {
     use super::*;
+    use bip39::Mnemonic;
     use crate::identity::Identity;
     
     #[test]
@@ -260,7 +261,8 @@ mod tests {
     fn test_generate_from_identity() {
         // Create a test identity
         let mnemonic_str = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about";
-        let identity = Identity::from_mnemonic(mnemonic_str).unwrap();
+        let mnemonic = bip39::Mnemonic::parse(mnemonic_str).unwrap();
+        let identity = Identity::from_mnemonic(&mnemonic).unwrap();
         
         let did = generate_did_from_identity(&identity, "Ed25519").unwrap();
         assert_eq!(did.method, "key");

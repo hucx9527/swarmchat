@@ -28,5 +28,8 @@ base58 = "0.2"
 # Date/time handling
 chrono = "0.4"
 
+# Cryptographic hashing
+sha2 = "0.10"
+
 [dev-dependencies]
 # tempfile = "3"  # Temporarily disabled due to getrandom 0.4.2 dependency
