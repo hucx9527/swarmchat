@@ -7,6 +7,7 @@
 // pub mod crypto;  // Temporarily disabled due to dependency issues
 pub mod identity;
 pub mod did;
+pub mod peer_id;
 
 /// Error types for the scp-core library
 #[derive(Debug, thiserror::Error)]
