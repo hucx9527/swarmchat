@@ -6,6 +6,7 @@
 
 // pub mod crypto;  // Temporarily disabled due to dependency issues
 pub mod identity;
+pub mod did;
 
 /// Error types for the scp-core library
 #[derive(Debug, thiserror::Error)]
@@ -15,6 +16,9 @@ pub enum Error {
     
     #[error("Identity error: {0}")]
     Identity(#[from] identity::IdentityError),
+    
+    #[error("DID error: {0}")]
+    Did(#[from] did::DidError),
     
     #[error("Serialization error: {0}")]
     Serialization(String),
