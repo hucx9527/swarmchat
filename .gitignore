@@ -1,6 +1,15 @@
 # Rust build artifacts
 scp-core/target/
 scp-core/tests/target/
+swarmchat/rust/scp-core-bridge/target/
+
+# Android temporary node_modules
+**/android/node_modules
+
+# Android build artifacts
+**/android/.gradle/
+**/android/app/.cxx/
+**/android/app/build/
 
 # Node
 node_modules/
@@ -62,3 +71,6 @@ windows/*.filters
 
 # Generated/scratch scripts
 gen_*.sh
+
+# Large binary downloads (exceeds GitHub 100MB limit)
+docs-site/downloads/*.apk
