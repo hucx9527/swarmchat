@@ -12,14 +12,14 @@ fn main() {
     
     // 1. Create a new identity
     println!("1. Creating new identity...");
-    let identity = Identity::new().expect("Failed to create identity");
+    let mut identity = Identity::new().expect("Failed to create identity");
     println!("   ✓ Identity created");
     println!("   Mnemonic: {}...", &identity.mnemonic.to_string()[..30]);
     println!("   Seed length: {} bytes\n", identity.seed.len());
-    
+
     // 2. Generate DID from identity
     println!("2. Generating DID from identity...");
-    let did = generate_did_from_identity(&identity, "Ed25519").expect("Failed to generate DID");
+    let did = generate_did_from_identity(&mut identity).expect("Failed to generate DID");
     println!("   ✓ DID generated");
     println!("   DID: {}", did);
     println!("   Public key length: {} bytes\n", did.public_key.len());

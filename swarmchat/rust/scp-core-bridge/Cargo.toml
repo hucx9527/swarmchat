@@ -1,0 +1,47 @@
+﻿[package]
+name = "scp-core-bridge"
+version = "0.1.0"
+edition = "2021"
+description = "JNI / FFI bridge exposing scp-core Rust library to React Native (Android + iOS)"
+
+[lib]
+name = "scp_core_bridge"
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+# FFI bridging
+jni = { version = "0.21", optional = true }        # Android JNI
+
+# Core crypto & identity (referenced from workspace)
+# In production, these would be a path dependency:
+# scp-core = { path = "../../../scp-core" }
+# For now we inline the key dependencies:
+
+# Crypto primitives
+ed25519-dalek = "2.1"
+x25519-dalek = "2.0"
+sha2 = "0.10"
+rand = "0.8"
+bip39 = "2.1"
+
+# Encoding
+bs58 = "0.5"
+hex = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# System RNG (transitive dep of rand, but explicit for Android cross-compile)
+getrandom = "0.2"
+
+# Error handling
+thiserror = "1"
+
+[features]
+default = []
+android = ["jni"]
+# iOS uses staticlib linking via C FFI, no special feature needed
+
+[profile.release]
+opt-level = "s"     # Optimize for size on mobile
+lto = true
+strip = true

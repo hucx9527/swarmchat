@@ -1,0 +1,73 @@
+{
+  "name": "swarmchat",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "windows": "react-native run-windows",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "build:rust:android": "cd rust/scp-core-bridge && cargo ndk -t armeabi-v7a -t arm64-v8a -t x86 -t x86_64 -o ../android/app/src/main/jniLibs build --release",
+    "build:rust:ios": "cd rust/scp-core-bridge && cargo lipo --release && cp target/universal/release/libscp_core_bridge.a ../ios/",
+    "postinstall": "npx pod-install"
+  },
+  "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.20",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/native-stack": "^6.9.26",
+    "@reduxjs/toolkit": "^2.2.0",
+    "react": "18.2.0",
+    "react-native": "0.76.9",
+    "react-native-camera": "^4.2.1",
+    "react-native-fs": "^2.20.0",
+    "react-native-gesture-handler": "2.31.2",
+    "react-native-image-picker": "^7.1.0",
+    "react-native-mmkv": "3.3.3",
+    "react-native-permissions": "^4.1.0",
+    "react-native-qrcode-svg": "^6.3.0",
+    "react-native-reanimated": "3.19.5",
+    "react-native-safe-area-context": "4.14.1",
+    "react-native-screens": "4.10.0",
+    "react-native-svg": "15.11.1",
+    "react-native-vector-icons": "^10.1.0",
+    "react-redux": "^9.1.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/runtime": "^7.26.0",
+    "@react-native/babel-preset": "0.76.9",
+    "@react-native/eslint-config": "0.76.9",
+    "@react-native/metro-config": "0.76.9",
+    "@react-native/typescript-config": "0.76.9",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.2.6",
+    "@types/react-native": "^0.73.0",
+    "@types/uuid": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.0",
+    "jest": "^29.7.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "react-test-renderer": "18.2.0",
+    "typescript": "^5.4.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|@react-native|@react-navigation|react-native-.*)/)"
+    ]
+  }
+}

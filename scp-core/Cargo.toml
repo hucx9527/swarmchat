@@ -2,34 +2,74 @@
 name = "scp-core"
 version = "0.1.0"
 edition = "2021"
+description = "Swarm Communication Protocol core library"
+license = "Apache-2.0"
+authors = ["SwarmChat Protocol Team"]
+repository = "https://github.com/hucx9527/swarmchat"
 
 [dependencies]
-# BIP39 mnemonic generation
-bip39 = "1"
-
-# Random number generation
+# 加密原语 (Cryptographic Primitives)
+ed25519-dalek = { version = "2.1", features = ["serde", "rand_core"] }
+x25519-dalek = { version = "2.0", features = ["static_secrets", "reusable_secrets"] }
+aes-gcm = { version = "0.10", features = ["aes"] }
+chacha20poly1305 = "0.10"
+hmac = "0.12"
+sha2 = "0.10"
+hkdf = "0.12"
 rand = "0.8"
 rand_core = "0.6"
 getrandom = "0.2"
 
-# Serialization
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+# BIP39 助记词
+bip39 = { version = "2.1", features = ["rand_core"] }
 
-# Error handling
-thiserror = "1"
+# 序列化 (Serialization)
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_cbor = "0.11"
+ciborium = "0.2"
 
-# Hex encoding
+# 多格式编码 (Multiformat Encoding)
+# (使用 base58 直接实现，无需 multihash/multibase 依赖)
+
+# 工具库 (Utilities)
+thiserror = "1.0"
+anyhow = "1.0"
 hex = "0.4"
-
-# Base58 encoding (for DID)
+base64 = "0.21"
 base58 = "0.2"
-
-# Date/time handling
+ulid = "1.1"
+bytes = "1.5"
 chrono = "0.4"
 
-# Cryptographic hashing
-sha2 = "0.10"
+# libp2p 传输层 (Transport Layer)
+libp2p = { version = "0.53", features = [
+    "tokio",
+    "quic",
+    "tcp",
+    "noise",
+    "yamux",
+    "kad",
+    "gossipsub",
+    "mdns",
+    "autonat",
+    "relay",
+    "identify",
+    "ping",
+    "dns",
+    "macros",
+] }
+tokio = { version = "1", features = ["full"] }
+futures = "0.3"
+tracing = "0.1"
+tracing-subscriber = "0.3"
 
+# 测试依赖 (Dev Dependencies)
 [dev-dependencies]
-# tempfile = "3"  # Temporarily disabled due to getrandom 0.4.2 dependency
+proptest = "1.4"
+hex-literal = "0.4"
+tempfile = "3"
+
+[features]
+default = []
+wasm = ["getrandom/js"]

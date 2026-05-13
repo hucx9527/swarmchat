@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCP 开发者门户 — SwarmChat 协议</title>
+    <meta name="description" content="Swarm Communication Protocol (SCP) — 构建去中心化、AI 原生的通信应用。">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --code-bg: #1c2128;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav .logo span { color: var(--accent2); }
+
+        nav .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        nav .links a:hover { color: var(--text); }
+
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 10px;
+            margin-left: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .lang-switch:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .lang-switch .active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .lang-switch .sep {
+            color: var(--border);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero .cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: #4090e0; }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { border-color: var(--accent); }
+
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .card:hover { border-color: var(--accent); }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .card .lang-tag {
+            display: inline-block;
+            background: var(--code-bg);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 0.75rem;
+            color: var(--accent2);
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .api-table th, .api-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table th {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .api-table td { font-size: 0.9rem; }
+
+        .api-table .method {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .method-get { background: #1b3a1b; color: #3fb950; }
+        .method-post { background: #1b2e3a; color: #58a6ff; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            nav { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">SCP <span>协议</span></a>
+        <div class="links">
+            <a href="#quickstart">快速开始</a>
+            <a href="#sdk">SDK</a>
+            <a href="#api">API</a>
+            <a href="#spec">规范</a>
+            <a href="downloads.zh.html">下载</a>
+            <a href="https://github.com/swarmchat">GitHub</a>
+            <a href="index.html" class="lang-switch">
+                <span>中文</span>
+                <span class="sep">|</span>
+                <span>EN</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>蜂群通信协议</h1>
+        <p>
+            一个去中心化、AI 原生的通信协议，专为下一代应用打造。构建 Agent、蜂群协作和安全的 P2P 消息系统，
+            内置加密身份和端到端加密。
+        </p>
+        <div class="cta">
+            <a href="#quickstart" class="btn btn-primary">5 分钟快速上手</a>
+            <a href="https://github.com/swarmchat" class="btn btn-secondary">查看 GitHub</a>
+        </div>
+    </section>
+
+    <section class="section" id="quickstart">
+        <h2>快速开始</h2>
+
+        <h3 style="margin-top:1.5rem">1. 启动中继节点</h3>
+        <pre><code># 克隆并编译中继
+git clone https://github.com/swarmchat/scp-relay
+cd scp-relay && go build -o scp-relay .
+
+# 启动中继
+./scp-relay --listen /ip4/0.0.0.0/udp/9090/quic-v1 --http :8080</code></pre>
+
+        <h3 style="margin-top:1.5rem">2. 创建身份</h3>
+        <pre><code># 使用 CLI
+cd scp-cli && go build -o scp-cli .
+./scp-cli identity create --label personal --nickname "Alice"
+
+# 使用 Python SDK
+from scp_sdk import SCPClient
+client = SCPClient("http://localhost:8080")</code></pre>
+
+        <h3 style="margin-top:1.5rem">3. 构建 Agent（Python）</h3>
+        <pre><code>from scp_sdk import SCPAgent, on_message, MessageType
+
+class EchoBot(SCPAgent):
+    @on_message(MessageType.TEXT)
+    def echo(self, envelope, payload):
+        self.reply(envelope, f"Echo: {payload['body']}")
+
+bot = EchoBot(client=client, did="did:key:z6Mk...", name="EchoBot")
+bot.run_webhook(port=5000)</code></pre>
+
+        <h3 style="margin-top:1.5rem">4. 发送消息</h3>
+        <pre><code># CLI
+./scp-cli message send --to did:key:z6Mk... --text "你好蜂群！"
+
+# Python
+client.send_text(from_did=my_did, to_did=peer_did, text="你好！")</code></pre>
+    </section>
+
+    <section class="section" id="sdk">
+        <h2>SDK 与工具</h2>
+        <div class="cards">
+            <a href="https://github.com/swarmchat/scp-core" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-core</h3>
+                <p>Rust 实现的核心协议库，包含 X3DH、Double Ratchet、Sender Key 加密和 DID 管理。</p>
+                <span class="lang-tag">Rust</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/scp-relay" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-relay</h3>
+                <p>中继节点：NAT 穿透、预密钥存储、离线消息投递。基于 go-libp2p 构建。</p>
+                <span class="lang-tag">Go</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/scp-cli" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-cli</h3>
+                <p>命令行工具：身份管理、消息收发、群组管理、Agent 操作。支持所有协议功能。</p>
+                <span class="lang-tag">Go</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/scp-sdk-python" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-sdk-python</h3>
+                <p>Python SDK：Agent 基类、Webhook 服务器、消息装饰器、中继客户端。</p>
+                <span class="lang-tag">Python</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/swarmchat" class="card" style="text-decoration:none;color:inherit">
+                <h3>SwarmChat App</h3>
+                <p>React Native 移动客户端，支持 iOS 和 Android，完整实现 SCP 协议。</p>
+                <span class="lang-tag">TypeScript · React Native</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="api">
+        <h2>中继 API 参考</h2>
+        <p style="color:var(--text-muted);margin-bottom:1rem">所有接口返回 JSON。基础 URL：<code>http://your-relay:8080</code></p>
+
+        <table class="api-table">
+            <thead>
+                <tr><th>方法</th><th>路径</th><th>说明</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/health</code></td>
+                    <td>健康检查：返回节点状态、PeerID、版本号</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/node/info</code></td>
+                    <td>节点信息：PeerID、地址、支持的协议</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-post">POST</span></td>
+                    <td><code>/prekey</code></td>
+                    <td>上传预密钥束（身份密钥、签名预密钥、一次性预密钥）</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/prekey/{did}</code></td>
+                    <td>获取指定 DID 的预密钥束</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-post">POST</span></td>
+                    <td><code>/message</code></td>
+                    <td>存储离线消息（加密信封，含 TTL）</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/sync/{did}</code></td>
+                    <td>同步离线消息（支持 since/limit 参数）</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="section" id="spec">
+        <h2>协议规范</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>§3 网络架构</h3>
+                <p>P2P 覆盖网络：QUIC 传输、Kademlia DHT、GossipSub 发布订阅、Circuit Relay v2 NAT 穿透。</p>
+            </div>
+            <div class="card">
+                <h3>§4 身份与加密</h3>
+                <p>BIP39 助记词、did:key 标识符、X3DH 密钥协商、一对一 Double Ratchet、群组 Sender Key。</p>
+            </div>
+            <div class="card">
+                <h3>§5 消息协议</h3>
+                <p>25 种消息类型，覆盖 6 大类别：基础消息、群组管理、Agent 语义、蜂群协作和系统控制。</p>
+            </div>
+            <div class="card">
+                <h3>§6 蜂群智能</h3>
+                <p>Agent 能力卡片、任务分配与认领、子蜂群形成、共识机制。</p>
+            </div>
+        </div>
+        <p style="margin-top:2rem">
+            <a href="https://github.com/swarmchat/scp-spec" class="btn btn-secondary">阅读完整规范</a>
+        </p>
+    </section>
+
+    <section class="section" id="architecture">
+        <h2>架构图</h2>
+        <pre><code>
+┌─────────────────────────────────────────────────────────────┐
+│                     SwarmChat 移动端                          │
+│                  (React Native · iOS/Android)                 │
+├─────────────────────────────────────────────────────────────┤
+│  scp-cli (Go)          │  scp-sdk-python  │  你的 Agent     │
+│  CLI 运维工具           │  Agent 框架      │  自定义 AI 机器人│
+├─────────────────────────────────────────────────────────────┤
+│                       scp-core (Rust)                        │
+│     X3DH | Double Ratchet | Sender Key | DID | PeerId        │
+├─────────────────────────────────────────────────────────────┤
+│                       scp-relay (Go)                         │
+│  Circuit Relay v2 | 预密钥存储 | 离线消息 | DHT             │
+├─────────────────────────────────────────────────────────────┤
+│                  libp2p P2P 网络层                            │
+│       QUIC · TCP · Noise · Yamux · Kademlia · GossipSub      │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+    </section>
+
+    <footer>
+        <p>
+            Swarm Communication Protocol v0.1.0 ·
+            <a href="https://github.com/swarmchat">GitHub</a> ·
+            <a href="https://github.com/swarmchat/scp-spec/blob/main/SCP-Specification-v0.1.0.md">协议规范</a> ·
+            <a href="https://github.com/swarmchat/scp-core">scp-core</a>
+        </p>
+        <p style="margin-top:0.5rem">Apache 2.0 许可证</p>
+    </footer>
+</body>
+</html>

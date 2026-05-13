@@ -10,14 +10,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     // 1. Create a new identity
     println!("1. Creating new identity...");
-    let identity = Identity::new()?;
+    let mut identity = Identity::new()?;
     println!("   ✓ Identity created");
-    println!("   Mnemonic: {}", identity.mnemonic);
+    println!("   Mnemonic: {}", identity.mnemonic_phrase());
     println!("   Seed length: {} bytes\n", identity.seed.len());
-    
+
     // 2. Generate DID from identity
     println!("2. Generating DID from identity...");
-    let did = generate_did_from_identity(&identity, "Ed25519")?;
+    let did = generate_did_from_identity(&mut identity)?;
     println!("   ✓ DID generated");
     println!("   DID: {}", did);
     println!("   Method: {}", did.method);

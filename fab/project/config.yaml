@@ -1,0 +1,2 @@
+agent:
+  spawn_command: "claude --bare --dangerously-skip-permissions --model deepseek-v4-pro"

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载 — SCP 协议</title>
+    <meta name="description" content="下载 SwarmChat 协议二进制文件、SDK 和安装包。">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --code-bg: #1c2128;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav .logo { font-size: 1.3rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+        nav .logo span { color: var(--accent2); }
+        nav .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        nav .links a:hover { color: var(--text); }
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 10px;
+            margin-left: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-switch:hover { border-color: var(--accent); color: var(--text); }
+        .lang-switch .active { color: var(--accent); font-weight: 600; }
+        .lang-switch .sep { color: var(--border); }
+
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        .section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .download-list { list-style: none; }
+        .download-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: border-color 0.2s;
+        }
+        .download-item:hover { border-color: var(--accent); }
+
+        .download-info { flex: 1; }
+        .download-info h3 { font-size: 1.05rem; color: var(--accent); margin-bottom: 0.2rem; }
+        .download-info p { font-size: 0.85rem; color: var(--text-muted); }
+        .download-info .meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.4rem;
+            font-size: 0.75rem;
+        }
+        .download-info .meta span {
+            background: var(--code-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent2);
+        }
+
+        .download-btn {
+            background: var(--accent);
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .download-btn:hover { background: #4090e0; }
+        .download-btn.gh {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            margin-left: 0.5rem;
+        }
+        .download-btn.gh:hover { border-color: var(--accent); }
+
+        .notice {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .notice strong { color: var(--accent); }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            nav { padding: 1rem; }
+            .download-item { flex-direction: column; gap: 1rem; align-items: stretch; }
+            .download-btns { display: flex; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">SCP <span>协议</span></a>
+        <div class="links">
+            <a href="/docs-site/index.zh.html">首页</a>
+            <a href="/docs-site/index.zh.html#quickstart">快速开始</a>
+            <a href="/docs-site/index.zh.html#sdk">SDK</a>
+            <a href="downloads.html" class="lang-switch">
+                <span>中文</span><span class="sep">|</span><span>EN</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="header">
+        <h1>下载中心</h1>
+        <p>预编译二进制文件、SDK 包和安装文件</p>
+    </div>
+
+    <div class="section">
+        <h2>📱 SwarmChat 移动应用</h2>
+
+        <div class="notice">
+            <strong>Android：</strong>下载 APK 在设备上侧载安装。
+            <strong>iOS：</strong>包含源码 + Podfile — 需 macOS + Xcode 构建。
+        </div>
+
+        <ul class="download-list">
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>SwarmChat Android APK</h3>
+                    <p>预构建 Android APK — 一对一聊天、群聊、扫码加好友、文件传输</p>
+                    <div class="meta">
+                        <span>ARM64</span>
+                        <span>146 MB</span>
+                        <span>React Native 0.76</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/swarmchat-app-debug.apk" class="download-btn" download>下载 APK</a>
+                    <a href="https://github.com/swarmchat/swarmchat" class="download-btn gh">源码</a>
+                    <a href="BUILD_GUIDE.zh.md" class="download-btn gh">构建指引</a>
+                </div>
+            </li>
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>SwarmChat iOS（源码）</h3>
+                    <p>iOS 源码 + Podfile — 需要 Xcode 15+ 在 macOS 上构建</p>
+                    <div class="meta">
+                        <span>tar.gz</span>
+                        <span>~20 KB</span>
+                        <span>ObjC Bridge</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/swarmchat-ios.tar.gz" class="download-btn" download>下载</a>
+                    <a href="https://github.com/swarmchat/swarmchat" class="download-btn gh">源码</a>
+                    <a href="BUILD_GUIDE.zh.md" class="download-btn gh">iOS 构建指引</a>
+                </div>
+            </li>
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>SwarmChat 完整源码</h3>
+                    <p>项目完整源码 — TypeScript、Rust、所有原生桥接文件</p>
+                    <div class="meta">
+                        <span>tar.gz</span>
+                        <span>55 KB</span>
+                        <span>TypeScript · React Native</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/swarmchat-app.tar.gz" class="download-btn" download>下载</a>
+                    <a href="https://github.com/swarmchat/swarmchat" class="download-btn gh">源码</a>
+                    <a href="BUILD_GUIDE.zh.md" class="download-btn gh">构建指引</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>📦 SwarmChat 服务端组件</h2>
+        <ul class="download-list">
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>scp-relay</h3>
+                    <p>中继节点二进制 — NAT 穿透、预密钥存储、离线消息</p>
+                    <div class="meta">
+                        <span>Linux amd64</span>
+                        <span>40 MB</span>
+                        <span>Go 1.26</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/scp-relay" class="download-btn" download>下载</a>
+                    <a href="https://github.com/swarmchat/scp-relay" class="download-btn gh">源码</a>
+                </div>
+            </li>
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>scp-cli</h3>
+                    <p>命令行工具 — 身份管理、消息收发、群组、Agent 操作</p>
+                    <div class="meta">
+                        <span>Linux amd64</span>
+                        <span>12 MB</span>
+                        <span>Go 1.26</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/scp-cli" class="download-btn" download>下载</a>
+                    <a href="https://github.com/swarmchat/scp-cli" class="download-btn gh">源码</a>
+                </div>
+            </li>
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>scp-sdk-python</h3>
+                    <p>Python SDK — Agent 框架、Webhook 服务器、中继客户端</p>
+                    <div class="meta">
+                        <span>tar.gz</span>
+                        <span>8.8 KB</span>
+                        <span>Python 3</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/scp-sdk-python.tar.gz" class="download-btn" download>下载</a>
+                    <a href="https://github.com/swarmchat/scp-sdk-python" class="download-btn gh">源码</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>📡 网络工具（OpenWrt）</h2>
+        <div class="notice">
+            <strong>说明：</strong>以下 IPK 包为 <strong>aarch64_cortex-a53</strong>（ARM64）OpenWrt 路由器构建。
+            通过 <code>opkg install &lt;文件&gt;</code> 安装。
+        </div>
+        <ul class="download-list">
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>alist v3.60.0</h3>
+                    <p>多存储文件列表 / WebDAV 程序</p>
+                    <div class="meta">
+                        <span>aarch64_cortex-a53</span>
+                        <span>40 MB</span>
+                        <span>.ipk</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/alist_3.60.0_aarch64_cortex-a53.ipk" class="download-btn" download>下载</a>
+                    <a href="https://github.com/AlistGo/alist" class="download-btn gh">源码</a>
+                </div>
+            </li>
+
+            <li class="download-item">
+                <div class="download-info">
+                    <h3>openp2p v3.25.8</h3>
+                    <p>P2P VPN/TCP 隧道，远程 NAT 穿透</p>
+                    <div class="meta">
+                        <span>aarch64_cortex-a53</span>
+                        <span>3.7 MB</span>
+                        <span>.ipk</span>
+                    </div>
+                </div>
+                <div class="download-btns">
+                    <a href="downloads/openp2p_3.25.8_aarch64_cortex-a53.ipk" class="download-btn" download>下载</a>
+                    <a href="https://github.com/openp2p-cn/openp2p" class="download-btn gh">源码</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <footer>
+        <p>Swarm Communication Protocol v0.1.0 · <a href="https://github.com/swarmchat">GitHub</a></p>
+    </footer>
+</body>
+</html>

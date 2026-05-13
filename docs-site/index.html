@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCP Developer Portal — SwarmChat Protocol</title>
+    <meta name="description" content="Swarm Communication Protocol (SCP) — Build decentralized, AI-native communication applications.">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --code-bg: #1c2128;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav .logo span { color: var(--accent2); }
+
+        nav .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        nav .links a:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero .cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: #4090e0; }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { border-color: var(--accent); }
+
+        /* Section */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .card:hover { border-color: var(--accent); }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .card .lang-tag {
+            display: inline-block;
+            background: var(--code-bg);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 0.75rem;
+            color: var(--accent2);
+        }
+
+        /* Code */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* API Table */
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .api-table th, .api-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table th {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .api-table td { font-size: 0.9rem; }
+
+        .api-table .method {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .method-get { background: #1b3a1b; color: #3fb950; }
+        .method-post { background: #1b2e3a; color: #58a6ff; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            nav { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">SCP <span>Protocol</span></a>
+        <div class="links">
+            <a href="#quickstart">Quickstart</a>
+            <a href="#sdk">SDKs</a>
+            <a href="#api">API</a>
+            <a href="#spec">Spec</a>
+            <a href="downloads.html">Downloads</a>
+            <a href="https://github.com/swarmchat">GitHub</a>
+            <a href="index.zh.html" class="lang-switch">
+                <span>EN</span>
+                <span class="sep">|</span>
+                <span>中文</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Swarm Communication Protocol</h1>
+        <p>
+            A decentralized, AI-native communication protocol for the next generation
+            of applications. Build agents, swarms, and secure P2P messaging with
+            cryptographic identity and end-to-end encryption.
+        </p>
+        <div class="cta">
+            <a href="#quickstart" class="btn btn-primary">Get Started in 5 Minutes</a>
+            <a href="https://github.com/swarmchat" class="btn btn-secondary">View on GitHub</a>
+        </div>
+    </section>
+
+    <section class="section" id="quickstart">
+        <h2>Quickstart</h2>
+
+        <h3 style="margin-top:1.5rem">1. Start a Relay Node</h3>
+        <pre><code># Clone and build the relay
+git clone https://github.com/swarmchat/scp-relay
+cd scp-relay && go build -o scp-relay .
+
+# Start the relay
+./scp-relay --listen /ip4/0.0.0.0/udp/9090/quic-v1 --http :8080</code></pre>
+
+        <h3 style="margin-top:1.5rem">2. Create an Identity</h3>
+        <pre><code># Using CLI
+cd scp-cli && go build -o scp-cli .
+./scp-cli identity create --label personal --nickname "Alice"
+
+# Using Python SDK
+from scp_sdk import SCPClient
+client = SCPClient("http://localhost:8080")</code></pre>
+
+        <h3 style="margin-top:1.5rem">3. Build an Agent (Python)</h3>
+        <pre><code>from scp_sdk import SCPAgent, on_message, MessageType
+
+class EchoBot(SCPAgent):
+    @on_message(MessageType.TEXT)
+    def echo(self, envelope, payload):
+        self.reply(envelope, f"Echo: {payload['body']}")
+
+bot = EchoBot(client=client, did="did:key:z6Mk...", name="EchoBot")
+bot.run_webhook(port=5000)</code></pre>
+
+        <h3 style="margin-top:1.5rem">4. Send a Message</h3>
+        <pre><code># CLI
+./scp-cli message send --to did:key:z6Mk... --text "Hello Swarm!"
+
+# Python
+client.send_text(from_did=my_did, to_did=peer_did, text="Hello!")</code></pre>
+    </section>
+
+    <section class="section" id="sdk">
+        <h2>SDKs & Tools</h2>
+        <div class="cards">
+            <a href="https://github.com/swarmchat/scp-core" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-core</h3>
+                <p>Core protocol library in Rust. Implements X3DH, Double Ratchet, Sender Key encryption, and DID management.</p>
+                <span class="lang-tag">Rust</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/scp-relay" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-relay</h3>
+                <p>Relay node for NAT traversal, prekey storage, and offline message delivery. Built with go-libp2p.</p>
+                <span class="lang-tag">Go</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/scp-cli" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-cli</h3>
+                <p>Command-line interface for identity management, messaging, groups, and agent operations.</p>
+                <span class="lang-tag">Go</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/scp-sdk-python" class="card" style="text-decoration:none;color:inherit">
+                <h3>scp-sdk-python</h3>
+                <p>Python SDK with agent base classes, webhook server, message decorators, and relay client.</p>
+                <span class="lang-tag">Python</span>
+            </a>
+
+            <a href="https://github.com/swarmchat/swarmchat" class="card" style="text-decoration:none;color:inherit">
+                <h3>SwarmChat App</h3>
+                <p>React Native mobile client for iOS and Android with full SCP protocol support.</p>
+                <span class="lang-tag">TypeScript · React Native</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="api">
+        <h2>Relay API Reference</h2>
+        <p style="color:var(--text-muted);margin-bottom:1rem">All endpoints return JSON. Base URL: <code>http://your-relay:8080</code></p>
+
+        <table class="api-table">
+            <thead>
+                <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/health</code></td>
+                    <td>Health check with node status, PeerID, version</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/node/info</code></td>
+                    <td>Node information: PeerID, addresses, protocols</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-post">POST</span></td>
+                    <td><code>/prekey</code></td>
+                    <td>Upload a prekey bundle (identity key, signed prekey, one-time prekeys)</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/prekey/{did}</code></td>
+                    <td>Get a prekey bundle for a specific DID</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-post">POST</span></td>
+                    <td><code>/message</code></td>
+                    <td>Store an offline message (encrypted envelope with TTL)</td>
+                </tr>
+                <tr>
+                    <td><span class="method method-get">GET</span></td>
+                    <td><code>/sync/{did}</code></td>
+                    <td>Sync offline messages for a DID (with since/limit params)</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="section" id="spec">
+        <h2>Protocol Specification</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>§3 Network Architecture</h3>
+                <p>P2P overlay with QUIC transport, Kademlia DHT, GossipSub pub/sub, and Circuit Relay v2 for NAT traversal.</p>
+            </div>
+            <div class="card">
+                <h3>§4 Identity & Encryption</h3>
+                <p>BIP39 mnemonics, did:key identifiers, X3DH key agreement, Double Ratchet for 1:1, Sender Key for groups.</p>
+            </div>
+            <div class="card">
+                <h3>§5 Message Protocol</h3>
+                <p>25 message types across 6 categories: basic messages, group management, agent semantics, swarm coordination, and system control.</p>
+            </div>
+            <div class="card">
+                <h3>§6 Swarm Intelligence</h3>
+                <p>Agent capability cards, task assignment and claiming, sub-swarm formation, and consensus mechanisms.</p>
+            </div>
+        </div>
+        <p style="margin-top:2rem">
+            <a href="https://github.com/swarmchat/scp-spec" class="btn btn-secondary">Read Full Specification</a>
+        </p>
+    </section>
+
+    <section class="section" id="architecture">
+        <h2>Architecture</h2>
+        <pre><code>
+┌─────────────────────────────────────────────────────────────┐
+│                     SwarmChat Mobile App                     │
+│                  (React Native · iOS/Android)                 │
+├─────────────────────────────────────────────────────────────┤
+│  scp-cli (Go)          │  scp-sdk-python  │  Your Agent Here │
+│  CLI tool for ops      │  Agent framework │  Custom AI bots  │
+├─────────────────────────────────────────────────────────────┤
+│                       scp-core (Rust)                        │
+│     X3DH | Double Ratchet | Sender Key | DID | PeerId        │
+├─────────────────────────────────────────────────────────────┤
+│                       scp-relay (Go)                         │
+│  Circuit Relay v2 | Prekey Store | Offline Messages | DHT   │
+├─────────────────────────────────────────────────────────────┤
+│                  libp2p P2P Network Layer                     │
+│       QUIC · TCP · Noise · Yamux · Kademlia · GossipSub      │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+    </section>
+
+    <footer>
+        <p>
+            Swarm Communication Protocol v0.1.0 ·
+            <a href="https://github.com/swarmchat">GitHub</a> ·
+            <a href="https://github.com/swarmchat/scp-spec/blob/main/SCP-Specification-v0.1.0.md">Specification</a> ·
+            <a href="https://github.com/swarmchat/scp-core">scp-core</a>
+        </p>
+        <p style="margin-top:0.5rem">Licensed under Apache 2.0</p>
+    </footer>
+</body>
+</html>

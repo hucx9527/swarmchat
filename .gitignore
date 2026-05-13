@@ -1,0 +1,64 @@
+# Rust build artifacts
+scp-core/target/
+scp-core/tests/target/
+
+# Node
+node_modules/
+**/node_modules/
+
+# React Native
+.swm/
+*.jsbundle
+*.hbc
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Go
+scp-relay/scp-relay
+scp-cli/scp-cli
+*.exe
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Windows build output
+windows/**/Debug/
+windows/**/Release/
+windows/**/x64/
+windows/**/ARM64/
+*.msix
+*.appx
+*.msixupload
+*.appxupload
+
+# React Native for Windows generated files
+windows/experimental/
+windows/*.sln
+windows/*.vcxproj*
+windows/*.props
+windows/*.targets
+windows/*.filters
+
+# Generated/scratch scripts
+gen_*.sh
